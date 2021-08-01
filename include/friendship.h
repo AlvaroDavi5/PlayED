@@ -1,11 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _FRIENDSHIP_H
 
+	#define _FRIENDSHIP_H
 
-int main()
-{
-	//
+	/* type definitions */
+	typedef int * IntPointerFS;
 
-	return 0;
-}
+	/* function prototypes */
+	int noneFS(int value);
+
+#endif
 

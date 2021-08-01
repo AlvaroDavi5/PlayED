@@ -1,11 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _PLAYLISTS_H
 
+	#define _PLAYLISTS_H
 
-int main()
-{
-	//
+	/* type definitions */
+	typedef int * IntPointerPL;
 
-	return 0;
-}
+	/* function prototypes */
+	int nonePL(int value);
+
+#endif
 
