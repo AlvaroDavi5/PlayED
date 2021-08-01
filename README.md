@@ -38,12 +38,13 @@ Abaixo, os diagramas representativos de cada tipo implementado:
 <img src="https://www.ufes.br/sites/all/themes/padrao_ufes/images/marca_ufes.png" alt="logo da ufes" height="150px" width="250px">
 <br>
 A seguir, as principais funções existentes no programa representadas em diagramas:
-<br>
 <img src="https://www.ufes.br/sites/all/themes/padrao_ufes/images/marca_ufes.png" alt="logo da ufes" height="150px" width="250px">
-<br>
+<br>  
+
 - **Conclusão:**  
 O trabalho abordou de forma clara e eficiente o uso de estruturas de dados para os mais diversos fins, explicitando a aplicação de tais estruturas desde os mais simples programas aos mais complexos sistemas.  
-As maiores dificuldades encontradas foram no uso de _void pointers_ e _heteroegeneous linked-lists_.
+As maiores dificuldades encontradas foram no uso de _void pointers_ e _heteroegeneous linked-lists_.  
+
 - **Bibliografia:**  
 [nome do conteudo pesquisado](https://google.com)
 
