@@ -29,6 +29,8 @@ ____
     - [ ] Modularização
     - [ ] Leitura de Arquivos
 
+- [ ] Documentar funções, estruturas, constantes e macros nos arquivos header em `include`  
+- [ ] Documentar trechos complicados do código nos arquivos source em `src`  
 - [ ] Criar arquivo PDF com documentação separada em:  
 - **Introdução:**  
 Criação de um programa para gerenciar músicas em playlists e relação de usuários no estilo rede social escrito na linguagem procedural estruturada C utilizando tipos abstratos de dados, modularização, leitura de arquivos, estruturas de dados e gerenciamento de memória.  
