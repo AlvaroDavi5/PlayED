@@ -46,7 +46,8 @@ Abaixo, os diagramas representativos de cada tipo implementado:
 A seguir, as principais funções existentes no programa representadas em diagramas:
 <br>
 <img src="https://www.ufes.br/sites/all/themes/padrao_ufes/images/marca_ufes.png" alt="logo da ufes" height="150px" width="250px">
-<br>  
+<br>
+
 * _Estruturas e TADs Implementados:_
  - **Lista de Usuários:** lista individualmente encadeada
    * _Usuário:_ TAD contendo Nome, Lista de Amigos e Lista de Playlists
