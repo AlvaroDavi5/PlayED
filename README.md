@@ -15,7 +15,7 @@ Primeiro trabalho de ```Estrutura de Dados I```
 ____
 
 
-- [ ] Criar código com conteúdo visto em aula
+- [ ] Código criado com conteúdo visto em aula
     - [ ] Tipos Abstratos de Dados
     - [ ] Estruturas Opacas
     - [ ] Ponteiros para Void
@@ -38,23 +38,24 @@ Criação de um programa para gerenciar músicas em playlists e relação de usu
 - **Implementação:**  
 O programa é dividido nos arquivos {...} onde a implementação das funções e dos tipos abstratos se encontram em arquivos de extensão .c no diretório `src` e suas definições e protótipos se encontram em arquivos de extensão .h no diretório `include`. <br>
 <br>
-Abaixo, os diagramas representativos de cada tipo implementado:
+Abaixo, o diagrama representativo de cada tipo implementado:
 <br>
-<img src="https://www.ufes.br/sites/all/themes/padrao_ufes/images/marca_ufes.png" alt="logo da ufes" height="150px" width="250px">
+![TADs e ED](./img/diagram.png)
 <br>
 <br>
-A seguir, as principais funções existentes no programa representadas em diagramas:
+A seguir, as principais funções existentes no programa representadas em diagrama:
 <br>
 <img src="https://www.ufes.br/sites/all/themes/padrao_ufes/images/marca_ufes.png" alt="logo da ufes" height="150px" width="250px">
 <br>
 
 * _Estruturas e TADs Implementados:_
- - **Lista de Usuários:** lista individualmente encadeada
-   * _Usuário:_ TAD contendo Nome, Lista de Amigos e Lista de Playlists
- - **Lista de Amigos:** lista individualmente encadeada
- - **Lista de Playlists:** lista duplamente encadeada
-   * _Playlist:_ TAD contendo Nome e Lista de Músicas
-     > _Música:_ TAD contendo Nome e Artista
+ - **Lista de Usuários:** lista individualmente encadeada contendo Tamanho, Primeiro e Último Usuário
+   * _Usuário:_ TAD contendo Índice, Nome, Lista de Amigos, Lista de Playlists e Próximo Usuário
+ - **Lista de Amigos:** lista individualmente encadeada contendo Tamanho, Primeiro e Último Amigo
+   * _Amigo:_ TAD contendo Índice, Usuário e Próximo Amigo
+ - **Lista de Playlists:** lista duplamente encadeada contendo Tamanho, Primeira e Última Playlist
+   * _Playlist:_ TAD contendo Índice, Nome, Anterior e Próxima Playlist e lista individualmente encadeada contendo Tamanho, Primeira e Última Música
+     > _Música:_ TAD contendo Índice, Nome, Artista e Próxima Música
 
 - **Conclusão:**  
 O trabalho abordou de forma clara e eficiente o uso de estruturas de dados para os mais diversos fins, explicitando a aplicação de tais estruturas desde os mais simples programas aos mais complexos sistemas.  
@@ -64,3 +65,4 @@ As maiores dificuldades encontradas foram no uso de _void pointers_ e _heteroege
 [listas encadeadas - IME-USP](https://www.ime.usp.br/~pf/algoritmos/aulas/lista.html)  
 [singly-linked list - TutorialsPoint](https://www.tutorialspoint.com/data_structures_algorithms/linked_list_program_in_c.htm)  
 [dooubly-linked list - GeeksforGeeks](https://www.geeksforgeeks.org/doubly-linked-list/)  
+

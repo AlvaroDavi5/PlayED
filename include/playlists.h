@@ -3,7 +3,9 @@
 	#define _PLAYLISTS_H
 
 	/* type definitions */
-	typedef int * IntPointerPL;
+	typedef struct playlists_list Playlists;
+	typedef struct playlist Playlist;
+	typedef struct music Music;
 
 	/* function prototypes */
 	int nonePL(int value);
