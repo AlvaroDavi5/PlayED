@@ -36,10 +36,9 @@ ____
 - **Introdução:**  
 Criação de um programa para gerenciar músicas em playlists e relação de usuários no estilo rede social escrito na linguagem procedural estruturada C utilizando tipos abstratos de dados, modularização, leitura de arquivos, estruturas de dados e gerenciamento de memória.  
 - **Implementação:**  
-O programa é dividido nos arquivos {...} onde a implementação das funções e dos tipos abstratos se encontram em arquivos de extensão .c no diretório `src` e suas definições e protótipos se encontram em arquivos de extensão .h no diretório `include`. <br>
-<br>
+O programa é dividido nos arquivos {...} onde a implementação das funções e dos tipos abstratos se encontram em arquivos de extensão .c no diretório `src` e suas definições e protótipos se encontram em arquivos de extensão .h no diretório `include`.  
+
 Abaixo, o diagrama representativo de cada tipo implementado:
-<br>
 ![TADs e ED](./img/diagram.png)
 <br>
 <br>
