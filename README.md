@@ -30,13 +30,13 @@ ____
     - [ ] Leitura de Arquivos
 
 - [ ] Documentar funções, estruturas, constantes e macros nos arquivos header em `include` (comentários multilinha)  
-- [ ] Documentar trechos complicados do código nos arquivos source em `src` (comentários em uma linha)  
+- [ ] Documentar trechos complicados do código nos arquivos source em `source` (comentários em uma linha)  
 - [ ] Criar makefile para compilar os arquivos
 - [ ] Criar arquivo PDF com documentação separada em:  
 - **Introdução:**  
 Criação de um programa para gerenciar músicas em playlists e relação de usuários no estilo rede social escrito na linguagem procedural estruturada C utilizando tipos abstratos de dados, modularização, leitura de arquivos, estruturas de dados e gerenciamento de memória.  
 - **Implementação:**  
-O programa é dividido nos arquivos {...} onde a implementação das funções e dos tipos abstratos se encontram em arquivos de extensão .c no diretório `src` e suas definições e protótipos se encontram em arquivos de extensão .h no diretório `include`.  
+O programa é dividido nos arquivos {...} onde a implementação das funções e dos tipos abstratos se encontram em arquivos de extensão .c no diretório `source` e suas definições e protótipos se encontram em arquivos de extensão .h no diretório `include`.  
 
 Abaixo, o diagrama representativo de cada tipo implementado:
 ![TADs e ED](./img/diagram.png)
