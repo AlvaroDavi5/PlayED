@@ -15,7 +15,7 @@ struct usr
 	unsigned int index;
 	char *name;
 	Friendlist *friends;
-	Playlists *playlists;
+	PlaylistList *playlists;
 	User *next;
 };
 
