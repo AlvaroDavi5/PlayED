@@ -2,12 +2,13 @@
 
 	#define _FRIENDSHIP_H
 
+	#include "users.h"
+
 	/* type definitions */
 	typedef struct friend_list Friendlist;
 	typedef struct friend Friend;
 
 	/* function prototypes */
-	int noneFS(int value);
+	int noneFS();
 
 #endif
-

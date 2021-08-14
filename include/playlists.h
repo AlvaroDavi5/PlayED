@@ -8,7 +8,6 @@
 	typedef struct music Music;
 
 	/* function prototypes */
-	int nonePL(int value);
+	int nonePL();
 
 #endif
-
