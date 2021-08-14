@@ -16,17 +16,17 @@ ____
 
 
 - [ ] Código criado com conteúdo visto em aula
-    - [ ] Tipos Abstratos de Dados
-    - [ ] Estruturas Opacas
+    - [x] Tipos Abstratos de Dados
+    - [x] Estruturas Opacas
     - [ ] Ponteiros para Void
     - [ ] Ponteiros para Funções
-    - [ ] Listas Encadeadas
-        - [ ] Simplesmente Ligadas
+    - [x] Listas Encadeadas
+        - [x] Simplesmente Ligadas
         - [ ] Cirulares
-        - [ ] Duplamente Ligadas
+        - [x] Duplamente Ligadas
         - [ ] Heterogêneas
     - [ ] Gerenciamento de Memória
-    - [ ] Modularização
+    - [x] Modularização
     - [ ] Leitura de Arquivos
 
 - [ ] Documentar funções, estruturas, constantes e macros nos arquivos header em `include` (comentários multilinha)  
