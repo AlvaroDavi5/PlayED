@@ -214,6 +214,8 @@ PlaylistList * initPlaylistList()
 
 void addPlaylistToHead(PlaylistList *list, Playlist *pl)
 {
+	pl->prev = NULL;
+
 	if (list->head == NULL)
 	{
 		list->tail = pl;
@@ -222,15 +224,19 @@ void addPlaylistToHead(PlaylistList *list, Playlist *pl)
 	else
 	{
 		pl->next = list->head;
+		(list->head)->prev = pl;
 	}
 
 	list->head = pl;
 	list->size += 1;
 
 	Playlist *current = list->head;
+	Playlist *previous = NULL;
 	for (int i = 0; i < list->size; i++)
 	{
 		(current)->index = i;
+		current->prev = previous;
+		previous = current;
 		current = (current)->next;
 	}
 }
@@ -249,6 +255,7 @@ void addPlaylistToTail(PlaylistList *list, Playlist *pl)
 	}
 
 	pl->index = list->size;
+	pl->prev = list->tail;
 	list->tail = pl;
 	list->size += 1;
 }
@@ -294,6 +301,7 @@ void deletePlaylist(PlaylistList *list, Playlist *pl)
 		if (current != NULL && (current)->next == pl)
 		{
 			(current)->next = pl->next;
+			(current->next)->prev = pl->prev;
 			((current)->next)->index = pl->index;
 		}
 	}
@@ -338,23 +346,5 @@ void displayPlaylistList(PlaylistList *list)
 		printf("Playlist %d: \n", (current)->index);
 		displayPlaylist(current);
 		current = (current)->next;
-	}
-}
-
-
-/* -------------- Another Functions -------------- */
-int compareValue(int n1, int n2)
-{
-	if (n1 == n2)
-	{
-		return 0;
-	}
-	else if (n2 > n1)
-	{
-		return 1;
-	}
-	else
-	{
-		return -1;
 	}
 }

@@ -139,14 +139,4 @@
 	**/
 	void displayPlaylistList(PlaylistList *list);
 
-	// -------------- Another Functions --------------
-	/**
-		* Compare two values and return a status
-		* @param int - n1
-		* @param int - n2
-		* @return 0: n2 == n1, 1: n2 > n1, -1: n2 < n1
-	**/
-	int compareValue(int n1, int n2);
-
-
 #endif
