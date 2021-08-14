@@ -118,7 +118,8 @@
 	void addPlaylistToTail(PlaylistList *list, Playlist *pl);
 	/**
 		* @param PlaylistList* - list
-		* @param Playlist* - pl
+		* @param fptrCompare - compareFunction
+		* @param int - position
 		* @return Playlist *
 	**/
 	Playlist * getPlaylist(PlaylistList *list, fptrCompare compareFunction, int position);
