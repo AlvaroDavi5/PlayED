@@ -5,7 +5,7 @@
 
 int main()
 {
-	//
+	// TODO: implement file read functions and initiate main function
 
 	return 0;
 }
