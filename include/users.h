@@ -5,11 +5,86 @@
 	#include "playlists.h"
 	#include "friendship.h"
 
-	/* type definitions */
+
+	/* ---------------------------- Type Definitions ---------------------------- */
+
+	// -------------- Abstract Data Types --------------
+	/*
+		size (int)
+		User list pointers
+		- first
+		- last
+	*/
 	typedef struct users_list UsersList;
+	/*
+		index (int)
+		name (string)
+		friends (Friendlist pointer)
+		playlists (PlaylistList pointer)
+		User pointer
+		- next
+	*/
 	typedef struct usr User;
 
-	/* function prototypes */
-	int noneUS();
+	// -------------- Function Pointers --------------
+	// receive int,int and return int
+	typedef int (* fptrCompare)(int, int);
+
+
+
+	/* ---------------------------- Function Prototypes ---------------------------- */
+
+	// -------------- User Functions --------------
+	/**
+		* @param string - name
+		* @return User *
+	**/
+	User * registerUser(char *name);
+	/**
+		* @param User* - user
+		* @return void
+	**/
+	void showUser(User *user);
+
+	// -------------- UsersList Functions --------------
+	/**
+		* @param void
+		* @return UsersList *
+	**/
+	UsersList * initUsersList();
+	void addUserToHead(UsersList *list, User *usr);
+	void addUserToTail(UsersList *list, User *usr);
+	/**
+		* @param UsersList*
+		* @param fptrCompare - compareFunction
+		* @param int - position
+		* @return User *
+	**/
+	User * getUser(UsersList *list, fptrCompare compareFunction, int position);
+	/**
+		* @param UsersList* - list
+		* @param User* - usr
+		* @return void
+	**/
+	void deleteUser(UsersList *list, User *usr);
+	/**
+		* @param UsersList* - list
+		* @return void
+	**/
+	void destroyUsersList(UsersList *list);
+	/**
+		* @param UsersList* - list
+		* @return void
+	**/
+	void displayUsersList(UsersList *list);
+
+	// -------------- Another Functions --------------
+	/**
+		* Compare two values and return a status
+		* @param int - n1
+		* @param int - n2
+		* @return 0: n2 == n1, 1: n2 > n1, -1: n2 < n1
+	**/
+	int compareValue(int n1, int n2);
 
 #endif
