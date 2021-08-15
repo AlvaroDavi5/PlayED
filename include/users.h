@@ -17,7 +17,7 @@
 	*/
 	typedef struct users_list UsersList;
 	/*
-		size (int)
+		index (int)
 		name (string)
 		friends (Friendlist pointer)
 		playlists (PlaylistList pointer)
