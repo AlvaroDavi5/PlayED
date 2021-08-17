@@ -60,7 +60,13 @@
 		* @param int - position
 		* @return User *
 	**/
-	User * getUser(UsersList *list, fptrCompare compareFunction, int position);
+	User * getUserByPosition(UsersList *list, fptrCompare compareFunction, int position);
+	/**
+		* @param UsersList*
+		* @param char* - name
+		* @return User *
+	**/
+	User * getUserByName(UsersList *list, char *name);
 	/**
 		* @param UsersList* - list
 		* @param User* - usr
@@ -79,6 +85,13 @@
 	void displayUsersList(UsersList *list);
 
 	// -------------- Another Functions --------------
+	/**
+		* Read the userlist and his friends list and create users with friendship relation
+		* @param FILE* - input_file
+		* @param UsersList* - list
+		* @return void
+	**/
+	void readUserAndFriends(FILE *input_file, UsersList *list);
 	/**
 		* Compare two values and return a status
 		* @param int - n1

@@ -92,13 +92,30 @@ void addUserToTail(UsersList *list, User *usr)
 	list->size += 1;
 }
 
-User * getUser(UsersList *list, fptrCompare compareFunction, int position)
+User * getUserByPosition(UsersList *list, fptrCompare compareFunction, int position)
 {
 	User *current = list->first;
 
 	while (current != NULL)
 	{
 		if (compareFunction((current)->index, position) == 0)
+		{
+			return current;
+		}
+
+		current = (current)->next;
+	}
+
+	return NULL;
+}
+
+User * getUserByName(UsersList *list, char *name)
+{
+	User *current = list->first;
+
+	while (current != NULL)
+	{
+		if (strcmp((current)->name, name) == 0)
 		{
 			return current;
 		}
@@ -138,6 +155,8 @@ void deleteUser(UsersList *list, User *usr)
 	}
 
 	free(usr->name);
+	destroyFriendList(usr->friends);
+	//destroyPlaylistList(usr->playlists);
 	free(usr);
 	list->size -= 1;
 
@@ -182,6 +201,43 @@ void displayUsersList(UsersList *list)
 
 
 /* -------------- Another Functions -------------- */
+void readUserAndFriends(FILE *input_file, UsersList *list)
+{
+	int count = 0; // user counter
+	char c = ' '; // iteration character
+	char userName[80] = "", friendName[80] = ""; // names store
+	User *usr = NULL, *fndu = NULL; // user general pointer
+	Friend *fnd = NULL; // friend general pointer
+
+	while (c != '\n' && c != EOF) // read first line while its not End Of File...
+	{
+		fscanf(input_file, "%[^;,\n]", userName); // store string between ';' as username
+		usr = registerUser(userName);
+		usr->friends = initFriendList();
+		addUserToTail(list, usr); // creating and saving users
+
+		c = fgetc(input_file); // [...] continue reading
+		usr = NULL;
+		count++;
+	}
+
+	for (int i = 0; i < count; i++)
+	{
+		if (i > 0) // skip first line
+		{
+			fscanf(input_file, "%[^;];%[^\n]", userName, friendName);
+			usr = getUserByName(list, userName);
+			fndu = getUserByName(list, friendName);
+			fnd = makeFriend(fndu);
+
+			if (usr != NULL && fndu != NULL)
+				addFriendToTail(usr->friends, fnd);
+		}
+	}
+
+	fclose(input_file);
+}
+
 int compareValue(int n1, int n2)
 {
 	if (n1 == n2)

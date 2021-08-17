@@ -70,7 +70,13 @@
 		* @param int - position
 		* @return Friend *
 	**/
-	Friend * getFriend(FriendList *list, fptrCompare compareFunction, int position);
+	Friend * getFriendByPosition(FriendList *list, fptrCompare compareFunction, int position);
+	/**
+		* @param FriendList* - list
+		* @param char* - name
+		* @return Friend *
+	**/
+	Friend * getFriendByName(FriendList *list, char *name);
 	/**
 		* @param FriendList* - list
 		* @param Friend* - fnd

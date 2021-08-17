@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "friendship.h"
 
 
@@ -98,13 +99,30 @@ void addFriendToTail(FriendList *list, Friend *fnd)
 	list->size += 1;
 }
 
-Friend * getFriend(FriendList *list, fptrCompare compareFunction, int position)
+Friend * getFriendByPosition(FriendList *list, fptrCompare compareFunction, int position)
 {
 	Friend *current = list->first;
 
 	while (current != NULL)
 	{
 		if (compareFunction((current)->index, position) == 0)
+		{
+			return current;
+		}
+
+		current = (current)->next;
+	}
+
+	return NULL;
+}
+
+Friend * getFriendByName(FriendList *list, char *name)
+{
+	Friend *current = list->first;
+
+	while (current != NULL)
+	{
+		if (strcmp(((current)->friend)->name, name) == 0)
 		{
 			return current;
 		}
