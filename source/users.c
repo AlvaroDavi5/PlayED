@@ -215,8 +215,14 @@ void readUserAndFriends(FILE *input_file, UsersList *list)
 			}
 		}
 	}
+	free(fnd);
 
 	fclose(input_file);
+}
+
+void readAndCreatePlaylists(FILE *input_file)
+{
+	//
 }
 
 int compareValue(int n1, int n2)
