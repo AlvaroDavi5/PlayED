@@ -19,7 +19,6 @@ int main()
 	} // else...
 
 
-	printf(" ,,$# -------------- PlayED -------------- @&|§ \n");
 	// TODO: implement file read functions and initiate main function
 	readUserAndFriends(friendship_if, users);
 

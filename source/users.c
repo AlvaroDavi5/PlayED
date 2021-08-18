@@ -28,6 +28,8 @@ User * registerUser(char *name)
 
 	user->index = -1;
 	user->name = strdup(name);
+	user->friends = initFriendList();
+	user->playlists = initPlaylistList();
 	user->next = NULL;
 
 	return user;
@@ -49,29 +51,6 @@ UsersList * initUsersList()
 	list->last = NULL;
 
 	return list;
-}
-
-void addUserToHead(UsersList *list, User *usr)
-{
-	if (list->first == NULL)
-	{
-		list->last = usr;
-		usr->next = NULL;
-	}
-	else
-	{
-		usr->next = list->first;
-	}
-
-	list->first = usr;
-	list->size += 1;
-
-	User *current = list->first;
-	for (int i = 0; i < list->size; i++)
-	{
-		(current)->index = i;
-		current = (current)->next;
-	}
 }
 
 void addUserToTail(UsersList *list, User *usr)
@@ -156,7 +135,7 @@ void deleteUser(UsersList *list, User *usr)
 
 	free(usr->name);
 	destroyFriendList(usr->friends);
-	//destroyPlaylistList(usr->playlists);
+	destroyPlaylistList(usr->playlists);
 	free(usr);
 	list->size -= 1;
 
@@ -206,17 +185,17 @@ void readUserAndFriends(FILE *input_file, UsersList *list)
 	int count = 0; // user counter
 	char c = ' '; // iteration character
 	char userName[80] = "", friendName[80] = ""; // names store
-	User *usr = NULL, *fndu = NULL; // user general pointer
+	User *usr = NULL; // user general pointer
 	Friend *fnd = NULL; // friend general pointer
 
-	while (c != '\n' && c != EOF) // read first line while its not End Of File...
+	while (c != EOF && c != '\n') // while its not End Of File, read first line and...
 	{
 		fscanf(input_file, "%[^;,\n]", userName); // store string between ';' as username
+		c = fgetc(input_file); // [...] continue reading
+
 		usr = registerUser(userName);
-		usr->friends = initFriendList();
 		addUserToTail(list, usr); // creating and saving users
 
-		c = fgetc(input_file); // [...] continue reading
 		usr = NULL;
 		count++;
 	}
@@ -227,11 +206,13 @@ void readUserAndFriends(FILE *input_file, UsersList *list)
 		{
 			fscanf(input_file, "%[^;];%[^\n]", userName, friendName);
 			usr = getUserByName(list, userName);
-			fndu = getUserByName(list, friendName);
-			fnd = makeFriend(fndu);
+			fnd = makeFriend(getUserByName(list, friendName));
 
-			if (usr != NULL && fndu != NULL)
+			if (usr != NULL && fnd != NULL)
+			{
 				addFriendToTail(usr->friends, fnd);
+				addFriendToTail(returnUser(fnd)->friends, makeFriend(usr));
+			}
 		}
 	}
 

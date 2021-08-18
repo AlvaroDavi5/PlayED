@@ -42,6 +42,11 @@
 	Friend * makeFriend(User *usr);
 	/**
 		* @param Friend* - friend
+		* @return User *
+	**/
+	User * returnUser(Friend *friend);
+	/**
+		* @param Friend* - friend
 		* @return void
 	**/
 	void showFriend(Friend *friend);
@@ -52,12 +57,6 @@
 		* @return FriendList *
 	**/
 	FriendList * initFriendList();
-	/**
-		* @param FriendList* - list
-		* @param Friend* - fnd
-		* @return void
-	**/
-	void addFriendToHead(FriendList *list, Friend *fnd);
 	/**
 		* @param FriendList* - list
 		* @param Friend* - fnd

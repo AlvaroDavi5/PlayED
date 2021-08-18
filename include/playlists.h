@@ -67,12 +67,6 @@
 		* @param Music* - song
 		* @return void
 	**/
-	void addMusicToHead(Playlist *playlist, Music *song);
-	/**
-		* @param Playlist* - playlist
-		* @param Music* - song
-		* @return void
-	**/
 	void addMusicToTail(Playlist *playlist, Music *song);
 	/**
 		* @param Playlist* - playlist
@@ -104,12 +98,6 @@
 		* @return PlaylistList *
 	**/
 	PlaylistList * initPlaylistList();
-	/**
-		* @param PlaylistList* - list
-		* @param Playlist* - pl
-		* @return void
-	**/
-	void addPlaylistToHead(PlaylistList *list, Playlist *pl);
 	/**
 		* @param PlaylistList* - list
 		* @param Playlist* - pl

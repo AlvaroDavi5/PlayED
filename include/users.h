@@ -52,10 +52,14 @@
 		* @return UsersList *
 	**/
 	UsersList * initUsersList();
-	void addUserToHead(UsersList *list, User *usr);
+	/**
+		* @param UsersList* - list
+		* @param User* - usr
+		* @return void
+	**/
 	void addUserToTail(UsersList *list, User *usr);
 	/**
-		* @param UsersList*
+		* @param UsersList* - list
 		* @param fptrCompare - compareFunction
 		* @param int - position
 		* @return User *

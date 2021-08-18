@@ -31,6 +31,9 @@ struct usr
 /* -------------- Friend Manipulation -------------- */
 Friend * makeFriend(User *usr)
 {
+	if (usr == NULL)
+		return NULL;
+
 	Friend *friend = (Friend *) malloc(sizeof(Friend));
 
 	friend->index = -1;
@@ -38,6 +41,11 @@ Friend * makeFriend(User *usr)
 	friend->next = NULL;
 
 	return friend;
+}
+
+User * returnUser(Friend *friend)
+{
+	return friend->friend;
 }
 
 void showFriend(Friend *friend)
@@ -56,29 +64,6 @@ FriendList * initFriendList()
 	list->last = NULL;
 
 	return list;
-}
-
-void addFriendToHead(FriendList *list, Friend *fnd)
-{
-	if (list->first == NULL)
-	{
-		list->last = fnd;
-		fnd->next = NULL;
-	}
-	else
-	{
-		fnd->next = list->first;
-	}
-
-	list->first = fnd;
-	list->size += 1;
-
-	Friend *current = list->first;
-	for (int i = 0; i < list->size; i++)
-	{
-		(current)->index = i;
-		current = (current)->next;
-	}
 }
 
 void addFriendToTail(FriendList *list, Friend *fnd)
