@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "playlists.h"
+#include "../include/playlists.h"
 
 
 struct playlists_list
@@ -65,29 +65,6 @@ Playlist * initPlaylist(char *name)
 	playlist->tail = NULL;
 
 	return playlist;
-}
-
-void addMusicToHead(Playlist *playlist, Music *song)
-{
-	if (playlist->head == NULL)
-	{
-		playlist->tail = song;
-		song->next = NULL;
-	}
-	else
-	{
-		song->next = playlist->head;
-	}
-
-	playlist->head = song;
-	playlist->size += 1;
-
-	Music *current = playlist->head;
-	for (int i = 0; i < playlist->size; i++)
-	{
-		(current)->index = i;
-		current = (current)->next;
-	}
 }
 
 void addMusicToTail(Playlist *playlist, Music *song)
@@ -210,35 +187,6 @@ PlaylistList * initPlaylistList()
 	list->tail = NULL;
 
 	return list;
-}
-
-void addPlaylistToHead(PlaylistList *list, Playlist *pl)
-{
-	pl->prev = NULL;
-
-	if (list->head == NULL)
-	{
-		list->tail = pl;
-		pl->next = NULL;
-	}
-	else
-	{
-		pl->next = list->head;
-		(list->head)->prev = pl;
-	}
-
-	list->head = pl;
-	list->size += 1;
-
-	Playlist *current = list->head;
-	Playlist *previous = NULL;
-	for (int i = 0; i < list->size; i++)
-	{
-		(current)->index = i;
-		current->prev = previous;
-		previous = current;
-		current = (current)->next;
-	}
 }
 
 void addPlaylistToTail(PlaylistList *list, Playlist *pl)

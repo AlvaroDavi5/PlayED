@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "users.h"
+#include "../include/users.h"
 
 
 struct users_list
@@ -28,6 +28,8 @@ User * registerUser(char *name)
 
 	user->index = -1;
 	user->name = strdup(name);
+	user->friends = initFriendList();
+	user->playlists = initPlaylistList();
 	user->next = NULL;
 
 	return user;
@@ -51,29 +53,6 @@ UsersList * initUsersList()
 	return list;
 }
 
-void addUserToHead(UsersList *list, User *usr)
-{
-	if (list->first == NULL)
-	{
-		list->last = usr;
-		usr->next = NULL;
-	}
-	else
-	{
-		usr->next = list->first;
-	}
-
-	list->first = usr;
-	list->size += 1;
-
-	User *current = list->first;
-	for (int i = 0; i < list->size; i++)
-	{
-		(current)->index = i;
-		current = (current)->next;
-	}
-}
-
 void addUserToTail(UsersList *list, User *usr)
 {
 	usr->next = NULL;
@@ -92,13 +71,30 @@ void addUserToTail(UsersList *list, User *usr)
 	list->size += 1;
 }
 
-User * getUser(UsersList *list, fptrCompare compareFunction, int position)
+User * getUserByPosition(UsersList *list, fptrCompare compareFunction, int position)
 {
 	User *current = list->first;
 
 	while (current != NULL)
 	{
 		if (compareFunction((current)->index, position) == 0)
+		{
+			return current;
+		}
+
+		current = (current)->next;
+	}
+
+	return NULL;
+}
+
+User * getUserByName(UsersList *list, char *name)
+{
+	User *current = list->first;
+
+	while (current != NULL)
+	{
+		if (strcmp((current)->name, name) == 0)
 		{
 			return current;
 		}
@@ -138,6 +134,8 @@ void deleteUser(UsersList *list, User *usr)
 	}
 
 	free(usr->name);
+	destroyFriendList(usr->friends);
+	destroyPlaylistList(usr->playlists);
 	free(usr);
 	list->size -= 1;
 
@@ -182,6 +180,110 @@ void displayUsersList(UsersList *list)
 
 
 /* -------------- Another Functions -------------- */
+void readUserAndFriends(FILE *input_file, UsersList *list)
+{
+	int count = 0; // user counter
+	char c = ' '; // iteration character
+	char userName[80] = "", friendName[80] = ""; // names store
+	User *usr = NULL; // user general pointer
+	Friend *fnd = NULL; // friend general pointer
+
+	while (c != EOF && c != '\n') // while its not End Of File, read first line and...
+	{
+		fscanf(input_file, "%[^;,\n]", userName); // store string between ';' as username
+		c = fgetc(input_file); // [...] continue reading
+
+		usr = registerUser(userName);
+		addUserToTail(list, usr); // creating and saving users
+
+		usr = NULL;
+		count++;
+	}
+
+	for (int i = 0; i < count; i++)
+	{
+		if (i > 0) // skip first line
+		{
+			fscanf(input_file, "%[^;];%[^\n]", userName, friendName);
+			usr = getUserByName(list, userName);
+			fnd = makeFriend(getUserByName(list, friendName));
+
+			if (usr != NULL && fnd != NULL)
+			{
+				addFriendToTail(usr->friends, fnd);
+				addFriendToTail(returnUser(fnd)->friends, makeFriend(usr));
+			}
+		}
+	}
+	free(fnd);
+
+	fclose(input_file);
+}
+
+void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
+{
+	int playlistNum, lineCount = 0, line = 0, i = 0;
+	char c = ' ';
+	char userName[80] = "", playlistName[80] = "", filePath[120] = "";
+	User *usr = NULL;
+	Playlist *pl = NULL;
+	FILE *musics_if = NULL;
+
+	rewind(input_file);
+	// counting lines
+	while (c != EOF)
+	{
+		c = fgetc(input_file);
+		if (c == '\n')
+			line++;
+	}
+	lineCount =  line+1;
+	rewind(input_file); // reseting file pointer (to read again)
+
+	for (int l = 0; l < lineCount; l++)
+	{
+		fscanf(input_file, "%[^;];%d", userName, &playlistNum); // reading user and number of playlist
+
+		usr = list->first;
+		while (usr != NULL) // runs through all users
+		{
+			if ((strcmp(userName, usr->name)) == 0)
+			{
+				for (i = 0; i < playlistNum; i++)
+				{
+					// reading playlist name
+					if (i != playlistNum-1)
+						fscanf(input_file, ";%[^;]", playlistName);
+					else
+						fscanf(input_file, ";%[^\n]", playlistName);
+
+					pl = initPlaylist(playlistName);
+					addPlaylistToTail(usr->playlists, pl);
+
+					strcpy(filePath, "./input/");
+					strcat(filePath, playlistName);
+					musics_if = fopen(filePath, "r");
+					if (musics_if == NULL)
+					{
+						printf("Error to open '%s' file, exiting! \n", filePath);
+						exit(1);
+					}
+					else
+					{
+						readPlaylistMusics(musics_if, pl); // load musics
+					}
+					strcpy(filePath, "./input/");
+				}
+			}
+			fscanf(input_file, "\n");
+
+			usr = usr->next;
+		}
+	}
+
+	fclose(input_file);
+}
+
 int compareValue(int n1, int n2)
 {
 	if (n1 == n2)

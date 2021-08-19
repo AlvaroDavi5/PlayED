@@ -15,23 +15,20 @@ Primeiro trabalho de ```Estrutura de Dados I```
 ____
 
 
-- [ ] Código criado com conteúdo visto em aula
+- [x] Código criado com conteúdo visto em aula
     - [x] Tipos Abstratos de Dados
     - [x] Estruturas Opacas
-    - [ ] Ponteiros para Void
-    - [ ] Ponteiros para Funções
+    - [x] Ponteiros para Funções
     - [x] Listas Encadeadas
         - [x] Simplesmente Ligadas
-        - [ ] Cirulares
         - [x] Duplamente Ligadas
-        - [ ] Heterogêneas
-    - [ ] Gerenciamento de Memória
+    - [x] Gerenciamento de Memória
     - [x] Modularização
-    - [ ] Leitura de Arquivos
+    - [x] Leitura de Arquivos
 
-- [ ] Documentar funções, estruturas, constantes e macros nos arquivos header em `include` (comentários multilinha)  
-- [ ] Documentar trechos complicados do código nos arquivos source em `source` (comentários em uma linha)  
-- [ ] Criar makefile para compilar os arquivos
+- [x] Documentar funções, estruturas, constantes e macros nos arquivos header em `include` (comentários multilinha)  
+- [x] Documentar trechos complicados do código nos arquivos source em `source` (comentários em uma linha)  
+- [x] Criar makefile para compilar os arquivos
 - [ ] Criar arquivo PDF com documentação separada em:  
 - **Introdução:**  
 Criação de um programa para gerenciar músicas em playlists e relação de usuários no estilo rede social escrito na linguagem procedural estruturada C utilizando tipos abstratos de dados, modularização, leitura de arquivos, estruturas de dados e gerenciamento de memória.  

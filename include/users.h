@@ -17,7 +17,7 @@
 	*/
 	typedef struct users_list UsersList;
 	/*
-		size (int)
+		index (int)
 		name (string)
 		friends (Friendlist pointer)
 		playlists (PlaylistList pointer)
@@ -52,15 +52,25 @@
 		* @return UsersList *
 	**/
 	UsersList * initUsersList();
-	void addUserToHead(UsersList *list, User *usr);
+	/**
+		* @param UsersList* - list
+		* @param User* - usr
+		* @return void
+	**/
 	void addUserToTail(UsersList *list, User *usr);
 	/**
-		* @param UsersList*
+		* @param UsersList* - list
 		* @param fptrCompare - compareFunction
 		* @param int - position
 		* @return User *
 	**/
-	User * getUser(UsersList *list, fptrCompare compareFunction, int position);
+	User * getUserByPosition(UsersList *list, fptrCompare compareFunction, int position);
+	/**
+		* @param UsersList*
+		* @param char* - name
+		* @return User *
+	**/
+	User * getUserByName(UsersList *list, char *name);
 	/**
 		* @param UsersList* - list
 		* @param User* - usr
@@ -79,6 +89,20 @@
 	void displayUsersList(UsersList *list);
 
 	// -------------- Another Functions --------------
+	/**
+		* Read the userlist and user friendlist file to create users with friendship relation
+		* @param FILE* - input_file
+		* @param UsersList* - list
+		* @return void
+	**/
+	void readUserAndFriends(FILE *input_file, UsersList *list);
+	/**
+		* Read the user playlists file and add to user profile
+		* @param FILE* - input_file
+		* @param UsersList* - list
+		* @return void
+	**/
+	void readAndCreateUserPlaylists(FILE *input_file, UsersList *list);
 	/**
 		* Compare two values and return a status
 		* @param int - n1
