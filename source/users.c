@@ -220,13 +220,14 @@ void readUserAndFriends(FILE *input_file, UsersList *list)
 	fclose(input_file);
 }
 
-void readAndCreatePlaylists(FILE *input_file, UsersList *list)
+void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
 {
 	int playlistNum, lineCount = 0, line = 0, i = 0;
 	char c = ' ';
-	char userName[80] = "", playlistName[80] = "";
+	char userName[80] = "", playlistName[80] = "", filePath[120] = "";
 	User *usr = NULL;
 	Playlist *pl = NULL;
+	FILE *musics_if = NULL;
 
 	rewind(input_file);
 	// counting lines
@@ -258,6 +259,20 @@ void readAndCreatePlaylists(FILE *input_file, UsersList *list)
 
 					pl = initPlaylist(playlistName);
 					addPlaylistToTail(usr->playlists, pl);
+
+					strcpy(filePath, "./input/");
+					strcat(filePath, playlistName);
+					musics_if = fopen(filePath, "r");
+					if (musics_if == NULL)
+					{
+						printf("Error to open '%s' file, exiting! \n", filePath);
+						exit(1);
+					}
+					else
+					{
+						readPlaylistMusics(musics_if, pl); // load musics
+					}
+					strcpy(filePath, "./input/");
 				}
 			}
 			fscanf(input_file, "\n");
