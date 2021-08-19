@@ -97,6 +97,13 @@
 	**/
 	void readUserAndFriends(FILE *input_file, UsersList *list);
 	/**
+		* Read the userlist and his friends list and create users with friendship relation
+		* @param FILE* - input_file
+		* @param UsersList* - list
+		* @return void
+	**/
+	void readAndCreatePlaylists(FILE *input_file, UsersList *list);
+	/**
 		* Compare two values and return a status
 		* @param int - n1
 		* @param int - n2
