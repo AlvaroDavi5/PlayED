@@ -19,7 +19,6 @@ int main()
 	} // else...
 
 
-	// TODO: implement file read functions and initiate main function
 	readUserAndFriends(friendship_if, users);
 	readAndCreatePlaylists(playlists_if, users);
 

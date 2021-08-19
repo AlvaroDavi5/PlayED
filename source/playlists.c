@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "playlists.h"
+#include "../include/playlists.h"
 
 
 struct playlists_list
