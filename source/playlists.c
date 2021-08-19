@@ -254,8 +254,7 @@ void deletePlaylist(PlaylistList *list, Playlist *pl)
 		}
 	}
 
-	free(pl->name);
-	free(pl);
+	destroyPlaylist(pl);
 	list->size -= 1;
 
 	Playlist *indexedPlaylist = list->head;
@@ -295,4 +294,59 @@ void displayPlaylistList(PlaylistList *list)
 		displayPlaylist(current);
 		current = (current)->next;
 	}
+}
+
+/* -------------- Another Functions -------------- */
+char* removeLeadingSpaces(char* str)
+{
+	static char strout[99];
+	int count = 0, j = 0, k = 0;
+
+	while (str[count] == ' ') // iterate String until last leading space character
+	{
+		count++;
+	}
+
+	for (j = count, k = 0; str[j] != '\0'; j++, k++)
+	{
+		strout[k] = str[j];
+	}
+	strout[k] = '\0';
+
+	return strout;
+}
+
+void readPlaylistMusics(FILE *input_file, Playlist *playlist)
+{
+	char c = ' ';
+	int count = 0; // music counter
+	char musicName[90] = "", artistName[80] = "";
+	Music *msc = NULL;
+
+	rewind(input_file);
+	while (c != EOF)
+	{
+		if (c == '\n')
+			count += 1;
+
+		c = fgetc(input_file);
+
+		if (c == EOF)
+			count++;
+	}
+	rewind(input_file);
+
+	for (int i = 0; i < count; i++)
+	{
+		fscanf(input_file, "%[^-] - %[^\n]\n", artistName, musicName);
+		strcpy(artistName, removeLeadingSpaces(artistName));
+
+		msc = createMusic(musicName, artistName);
+		addMusicToTail(playlist, msc);
+
+		strcpy(artistName, "");
+		msc = NULL;
+	}
+
+	fclose(input_file);
 }
