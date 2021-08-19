@@ -90,12 +90,19 @@
 
 	// -------------- Another Functions --------------
 	/**
-		* Read the userlist and his friends list and create users with friendship relation
+		* Read the userlist and user friendlist file to create users with friendship relation
 		* @param FILE* - input_file
 		* @param UsersList* - list
 		* @return void
 	**/
 	void readUserAndFriends(FILE *input_file, UsersList *list);
+	/**
+		* Read the user playlists file and add to user profile
+		* @param FILE* - input_file
+		* @param UsersList* - list
+		* @return void
+	**/
+	void readAndCreateUserPlaylists(FILE *input_file, UsersList *list);
 	/**
 		* Compare two values and return a status
 		* @param int - n1

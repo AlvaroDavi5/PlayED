@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "friendship.h"
+#include "../include/friendship.h"
 
 
 struct friend_list
@@ -76,7 +76,7 @@ void addFriendToTail(FriendList *list, Friend *fnd)
 	}
 	else
 	{
-		list->last->next = fnd;
+		(list->last)->next = fnd;
 	}
 
 	fnd->index = list->size;

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "users.h"
+#include "../include/users.h"
 
 
 struct users_list
@@ -213,6 +213,71 @@ void readUserAndFriends(FILE *input_file, UsersList *list)
 				addFriendToTail(usr->friends, fnd);
 				addFriendToTail(returnUser(fnd)->friends, makeFriend(usr));
 			}
+		}
+	}
+	free(fnd);
+
+	fclose(input_file);
+}
+
+void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
+{
+	int playlistNum, lineCount = 0, line = 0, i = 0;
+	char c = ' ';
+	char userName[80] = "", playlistName[80] = "", filePath[120] = "";
+	User *usr = NULL;
+	Playlist *pl = NULL;
+	FILE *musics_if = NULL;
+
+	rewind(input_file);
+	// counting lines
+	while (c != EOF)
+	{
+		c = fgetc(input_file);
+		if (c == '\n')
+			line++;
+	}
+	lineCount =  line+1;
+	rewind(input_file); // reseting file pointer (to read again)
+
+	for (int l = 0; l < lineCount; l++)
+	{
+		fscanf(input_file, "%[^;];%d", userName, &playlistNum); // reading user and number of playlist
+
+		usr = list->first;
+		while (usr != NULL) // runs through all users
+		{
+			if ((strcmp(userName, usr->name)) == 0)
+			{
+				for (i = 0; i < playlistNum; i++)
+				{
+					// reading playlist name
+					if (i != playlistNum-1)
+						fscanf(input_file, ";%[^;]", playlistName);
+					else
+						fscanf(input_file, ";%[^\n]", playlistName);
+
+					pl = initPlaylist(playlistName);
+					addPlaylistToTail(usr->playlists, pl);
+
+					strcpy(filePath, "./input/");
+					strcat(filePath, playlistName);
+					musics_if = fopen(filePath, "r");
+					if (musics_if == NULL)
+					{
+						printf("Error to open '%s' file, exiting! \n", filePath);
+						exit(1);
+					}
+					else
+					{
+						readPlaylistMusics(musics_if, pl); // load musics
+					}
+					strcpy(filePath, "./input/");
+				}
+			}
+			fscanf(input_file, "\n");
+
+			usr = usr->next;
 		}
 	}
 

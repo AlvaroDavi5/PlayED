@@ -40,6 +40,11 @@ valgrind: all
 	@ valgrind ${VALGRIND_FLAGS} ./bin/${BIN_NAME}
 
 
+assembly: all
+	@ gcc -E ./source/main.c > ./object/precomp_code.i
+	@ gcc -S ./object/precomp_code.i -o ./object/assembly_code.s
+
+
 all: objectFolder ./bin/${BIN_NAME}
 	@ echo " \033[1;32m  Tudo feito!  \033[0m "
 	@ echo ''
@@ -74,7 +79,7 @@ objectFolder:
 
 # clear residual files
 clean:
-	@ rm -rf ./object/*.o *~ ./bin/${BIN_NAME}
+	@ rm -rf ./object/*.o ./object/*.i ./object/*.s *~ ./bin/${BIN_NAME}
 	@ rmdir object bin
 	@ echo " \033[1;31m  Removendo binario \033[41;1;37m./bin/${BIN_NAME}\033[0m\033[1;31m e objetos de compilacao \033[41;1;37m${OBJ}\033[0m\033[1;31m e arquivos de backup  \033[0m "
 	@ echo ''

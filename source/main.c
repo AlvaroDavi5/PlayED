@@ -14,17 +14,14 @@ int main()
 
 	if (friendship_if == NULL || playlists_if == NULL) // check if the files do not exist
 	{
-		printf("Error to open files, exiting!\n");
+		printf("Error to open 'amizade.txt' and 'playlists.txt' files, exiting!\n");
 		exit(1);
 	} // else...
 
 
-	// TODO: implement file read functions and initiate main function
 	readUserAndFriends(friendship_if, users);
+	readAndCreateUserPlaylists(playlists_if, users);
 
-
-	// closing files
-	fclose(playlists_if);
 
 	// freeing memory
 	destroyUsersList(users);
