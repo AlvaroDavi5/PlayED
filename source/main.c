@@ -23,6 +23,10 @@ int main()
 	readUserAndFriends(friendship_if, users);
 	readAndCreateUserPlaylists(playlists_if, users);
 
+	createDir("./", "output");
+	displayUsersList(users);
+	refactPlayED(users);
+
 
 	// freeing memory
 	destroyUsersList(users);

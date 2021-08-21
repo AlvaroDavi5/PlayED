@@ -88,4 +88,16 @@
 	**/
 	void displayUsersList(UsersList *list);
 
+	// -------------- General Functions --------------
+	/**
+		* @param UsersList* - users
+		* @return void
+	**/
+	void refactPlayED(UsersList *users);
+	/**
+		* @param UsersList* - users
+		* @return void
+	**/
+	void printSimilarities(UsersList *users);
+
 #endif

@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../include/utils.h"
 #include "../include/users.h"
+#include "../include/playlists.h"
 
 
 struct users_list
@@ -18,6 +20,32 @@ struct usr
 	FriendList *friends;
 	PlaylistList *playlists;
 	User *next;
+};
+
+struct playlists_list
+{
+	int size;
+	Playlist *head;
+	Playlist *tail;
+};
+
+struct playlist
+{
+	int index;
+	char *name;
+	Playlist *prev;
+	Playlist *next;
+	int size;
+	Music *head;
+	Music *tail;
+};
+
+struct music
+{
+	int index;
+	char *artist;
+	char *name;
+	Music *next;
 };
 
 
@@ -176,4 +204,44 @@ void displayUsersList(UsersList *list)
 		showUser(current);
 		current = (current)->next;
 	}
+}
+
+
+/* -------------- General Manipulation -------------- */
+void refactPlayED(UsersList *users)
+{
+	User *usr = NULL;
+	PlaylistList *refactPlaylists = NULL;
+	Playlist *pl = NULL;
+
+	FILE *refact_of = fopen("./output/played-refatorada.txt", "w+");
+
+	usr = users->first;
+	while (usr != NULL)
+	{
+		fprintf(refact_of, "%s;%d;", usr->name, (usr->playlists)->size);
+		pl = (usr->playlists)->head;
+		while (pl != NULL)
+		{
+			if (pl->next != NULL)
+				fprintf(refact_of, "%s;", pl->name);
+			else if (usr->next != NULL)
+				fprintf(refact_of, "%s\n", pl->name);
+			else
+				fprintf(refact_of, "%s", pl->name);
+			pl = pl->next;
+		}
+		usr = usr->next;
+	}
+
+	fclose(refact_of);
+}
+
+void printSimilarities(UsersList *users)
+{
+	FILE *similarity_of = fopen("./output/similaridades.txt", "w+");
+
+	//
+
+	fclose(similarity_of);
 }
