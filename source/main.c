@@ -23,13 +23,20 @@ int main()
 	readUserAndFriends(friendship_if, users);
 	readAndCreateUserPlaylists(playlists_if, users);
 
-	createDir("./", "output");
-	displayUsersList(users);
+	createFolder("./", "output");
 	refactPlayED(users);
+	printSimilarities(users);
+
+	/**
+	* TODO: URGENT!!!
+	* ? fix memory leak in readUserAndFriends on utils.c
+	* * create similarities function
+	**/
 
 
 	// freeing memory
 	destroyUsersList(users);
+	system("rm -rf ./temp"); // clear all temporary files
 
 	return 0;
 }

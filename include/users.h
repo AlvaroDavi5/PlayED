@@ -95,6 +95,12 @@
 	**/
 	void refactPlayED(UsersList *users);
 	/**
+		* @param string - userName
+		* @param User* - list
+		* @return void
+	**/
+	void buildUserPlaylistsFolder(char *userName, PlaylistList *list);
+	/**
 		* @param UsersList* - users
 		* @return void
 	**/

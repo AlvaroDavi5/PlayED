@@ -24,6 +24,7 @@ CPL_FLAGS=-c   \
 VALGRIND_FLAGS=-s \
                --leak-check=full \
                --show-leak-kinds=all \
+			   --show-reachable=yes \
                --track-origins=yes \
                --verbose
 
@@ -40,6 +41,13 @@ valgrind: all
 	@ valgrind ${VALGRIND_FLAGS} ./bin/${BIN_NAME}
 
 
+# show difference between output files
+diff: run
+	@ echo ''
+	@ diff -r ./output/ ./output-standart/ --color=always
+
+
+# build assembly code
 assembly: all
 	@ gcc -E ./source/main.c > ./object/precomp_code.i
 	@ gcc -S ./object/precomp_code.i -o ./object/assembly_code.s
@@ -80,8 +88,8 @@ objectFolder:
 # clear residual files
 clean:
 	@ rm -rf ./object/*.o ./object/*.i ./object/*.s *~ ./bin/${BIN_NAME}
-	@ rm -rf ./output/
 	@ rmdir object bin
+	@ rm -rf ./output/ ./temp/
 	@ echo " \033[1;31m  Removing binary \033[41;1;37m./bin/${BIN_NAME}\033[0m\033[1;31m and compilation objects \033[41;1;37m${OBJ}\033[0m\033[1;31m and backup or output files  \033[0m "
 	@ echo ''
 

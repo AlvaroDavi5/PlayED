@@ -213,7 +213,110 @@ void refactPlayED(UsersList *users)
 	User *usr = NULL;
 	PlaylistList *refactPlaylists = NULL;
 	Playlist *pl = NULL;
+	int musicCount = 0;
+	char userPath[80] = "", playlistName[70] = "", artistName[60] = "", musicName[80] = "";
 
+	// storing all users musics on temporary files (to avoid large memory usage)
+	usr = users->first;
+	createFolder("./", "temp");
+	while (usr != NULL)
+	{
+		strcpy(userPath, "./temp/");
+		strcat(userPath, usr->name);
+		strcat(userPath, ".txt");
+		FILE *userpl_of = fopen(userPath, "w+");
+
+		pl = (usr->playlists)->head;
+		while (pl != NULL)
+		{
+			Music *msc = pl->head;
+			while (msc != NULL)
+			{
+				fprintf(userpl_of, "%s~%s\n", msc->artist, msc->name);
+				msc = msc->next;
+			}
+			pl = pl->next;
+		}
+		usr = usr->next;
+		fclose(userpl_of);
+	}
+
+	// refactoring playlists
+	usr = users->first;
+	while (usr != NULL)
+	{
+		strcpy(userPath, "./temp/");
+		strcat(userPath, usr->name);
+		strcat(userPath, ".txt");
+		FILE *userpl_if = fopen(userPath, "r");
+		char c = ' ';
+		refactPlaylists = initPlaylistList();
+
+		rewind(userpl_if);
+		while (c != EOF)
+		{
+			c = fgetc(userpl_if);
+			if (c == '\n')
+				musicCount++;
+		}
+		rewind(userpl_if);
+		for (int l = 0; l < musicCount; l++)
+		{
+			fscanf(userpl_if, "%[^~]~%[^\n]\n", artistName, musicName);
+
+			Music *msc = createMusic(musicName, artistName); // create music
+			Playlist *rpl = refactPlaylists->head; // iterate for all new playlists
+			Playlist *npl = NULL;
+			int playlistWasCreated = 2;
+
+			strcpy(artistName, msc->artist); // save artist name
+			strcat(artistName, ".txt");
+			strcpy(playlistName, artistName); // create playlist name
+
+			if (rpl == NULL && refactPlaylists->size == 0)
+			{
+				npl = initPlaylist(playlistName);
+				addMusicToTail(npl, msc);
+				addPlaylistToTail(refactPlaylists, npl);
+			}
+			else
+			{
+				while (rpl != NULL)
+				{
+					if (strcmp(playlistName, rpl->name) == 0) // if the playlist with the artist name already exists...
+					{
+						playlistWasCreated = TRUE;
+						break;
+					}
+					else
+						playlistWasCreated = FALSE;
+					rpl = rpl->next;
+				}
+				{
+					if (playlistWasCreated == FALSE) // if the playlist was not created...
+					{
+						npl = initPlaylist(playlistName); // [...] create new playlist
+						addMusicToTail(npl, msc); // add music
+						addPlaylistToTail(refactPlaylists, npl); // save playlist
+					}
+					else
+					{
+						addMusicToTail(rpl, msc); // just add music to existent playlist
+					}
+				}
+			}
+			rpl = refactPlaylists->head;
+		}
+		musicCount = 0;
+		destroyPlaylistList(usr->playlists);
+		usr->playlists = refactPlaylists;
+		buildUserPlaylistsFolder(usr->name, usr->playlists);
+
+		usr = usr->next;
+		fclose(userpl_if);
+	}
+
+	// writing refactored playED
 	FILE *refact_of = fopen("./output/played-refatorada.txt", "w+");
 
 	usr = users->first;
@@ -233,8 +336,38 @@ void refactPlayED(UsersList *users)
 		}
 		usr = usr->next;
 	}
-
 	fclose(refact_of);
+}
+
+void buildUserPlaylistsFolder(char *userName, PlaylistList *list)
+{
+	char userPath[80] = "./output/", playlistFile[120] = "";
+
+	// prepare directory
+	createFolder(userPath, userName);
+	strcat(userPath, userName);
+	strcat(userPath, "/");
+
+	Playlist *pl = list->head;
+	while (pl != NULL)
+	{
+		strcpy(playlistFile, userPath);
+		strcat(playlistFile, pl->name);
+		FILE *pl_of = fopen(playlistFile, "w+");
+
+		Music *song = pl->head;
+		while (song != NULL)
+		{
+			fprintf(pl_of, "%s - %s", song->artist, song->name);
+			if (song->next != NULL)
+				fprintf(pl_of, "\n");
+
+			song = song->next;
+		}
+		fclose(pl_of);
+
+		pl = pl->next;
+	}
 }
 
 void printSimilarities(UsersList *users)
