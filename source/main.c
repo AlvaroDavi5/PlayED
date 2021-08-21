@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../include/utils.h"
 #include "../include/users.h"
 #include "../include/playlists.h"
 #include "../include/friendship.h"

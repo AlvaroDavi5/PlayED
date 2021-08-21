@@ -128,13 +128,4 @@
 	**/
 	void displayPlaylistList(PlaylistList *list);
 
-	// -------------- Another Functions --------------
-	/**
-		* Read the playlist music files and add musics to playlist
-		* @param FILE* - input_file
-		* @param Playlist* - playlist
-		* @return void
-	**/
-	void readPlaylistMusics(FILE *input_file, Playlist *playlist);
-
 #endif

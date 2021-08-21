@@ -88,27 +88,4 @@
 	**/
 	void displayUsersList(UsersList *list);
 
-	// -------------- Another Functions --------------
-	/**
-		* Read the userlist and user friendlist file to create users with friendship relation
-		* @param FILE* - input_file
-		* @param UsersList* - list
-		* @return void
-	**/
-	void readUserAndFriends(FILE *input_file, UsersList *list);
-	/**
-		* Read the user playlists file and add to user profile
-		* @param FILE* - input_file
-		* @param UsersList* - list
-		* @return void
-	**/
-	void readAndCreateUserPlaylists(FILE *input_file, UsersList *list);
-	/**
-		* Compare two values and return a status
-		* @param int - n1
-		* @param int - n2
-		* @return 0: n2 == n1, 1: n2 > n1, -1: n2 < n1
-	**/
-	int compareValue(int n1, int n2);
-
 #endif
