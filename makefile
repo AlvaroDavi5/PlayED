@@ -41,6 +41,13 @@ valgrind: all
 	@ valgrind ${VALGRIND_FLAGS} ./bin/${BIN_NAME}
 
 
+# show difference between output files
+diff: run
+	@ echo ''
+	@ diff -r ./output/ ./output-standart/ --color=always
+
+
+# build assembly code
 assembly: all
 	@ gcc -E ./source/main.c > ./object/precomp_code.i
 	@ gcc -S ./object/precomp_code.i -o ./object/assembly_code.s
