@@ -213,6 +213,62 @@ void refactPlayED(UsersList *users)
 	User *usr = NULL;
 	PlaylistList *refactPlaylists = NULL;
 	Playlist *pl = NULL;
+	/*char playlistName[80] = "", artistName[80] = "";
+
+	usr = users->first;
+	while (usr != NULL)
+	{
+		PlaylistList *oldplaylists = usr->playlists;
+		refactPlaylists = initPlaylistList();
+
+		pl = (usr->playlists)->head;
+		while (pl != NULL)
+		{
+			Music *msc = pl->head;
+			while (msc != NULL)
+			{
+				Playlist *rpl = refactPlaylists->head; // iterate for all new playlists
+				Playlist *npl = NULL;
+				strcpy(artistName, msc->artist); // save artist name
+				strcat(artistName, ".txt");
+				strcpy(playlistName, artistName); // create playlist name
+
+				if (rpl == NULL)
+				{
+					npl = initPlaylist(playlistName);
+					addMusicToTail(npl, msc);
+					addPlaylistToTail(refactPlaylists, npl);
+					refactPlaylists->size += 1;
+					msc = msc->next;
+				}
+				while (rpl != NULL)
+				{
+					if (strcmp(playlistName, rpl->name) != 0) // if the playlist with the artist name was not created...
+					{
+						npl = initPlaylist(playlistName); // [...] create new playlist
+						addMusicToTail(npl, msc); // add music
+						addPlaylistToTail(refactPlaylists, npl); // save playlist
+						refactPlaylists->size += 1;
+					}
+					else
+					{
+						addMusicToTail(rpl, msc); // just add music to existent playlist
+					}
+
+					rpl = rpl->next;
+				}
+
+				msc = msc->next;
+			}
+
+			pl = pl->next;
+		}
+		destroyPlaylistList(oldplaylists);
+		usr->playlists = refactPlaylists;
+
+		usr = usr->next;
+	}*/
+
 
 	FILE *refact_of = fopen("./output/played-refatorada.txt", "w+");
 

@@ -27,6 +27,13 @@ int main()
 	displayUsersList(users);
 	refactPlayED(users);
 
+	/**
+	* TODO: URGENT!!!
+	* ! fix memory management in refactPlayED on users.c
+	* ? fix memory leak in readUserAndFriends on utils.c
+	* * create new functions to another outputs
+	**/
+
 
 	// freeing memory
 	destroyUsersList(users);
