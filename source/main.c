@@ -23,9 +23,11 @@ int main()
 	readUserAndFriends(friendship_if, users);
 	readAndCreateUserPlaylists(playlists_if, users);
 
-	createFolder("./", "output");
-	refactPlayED(users);
-	printSimilarities(users);
+	if (createFolder("./", "output"))
+	{
+		refactPlayED(users);
+		printSimilarities(users);
+	}
 
 	/**
 	* TODO: URGENT!!!

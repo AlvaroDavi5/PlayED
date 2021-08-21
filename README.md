@@ -39,12 +39,25 @@ Abaixo, o diagrama representativo de cada tipo implementado:
 ![TADs e ED](./img/diagram.png)
 <br>
 <br>
-A seguir, as principais funções existentes no programa representadas em diagrama:
+A seguir, alguns exemplos da declaração das funções e sua documentação dentro do código, de forma que fiquem compreensíveis e bem documentadas mesmo utilizando ferramentas de IntelliSense existentes na maioria dos editores de código e IDEs.  
+<div align="center">
+	<img src="./img/main.png" alt="main.c" height="420px"/>
+	<br>e
+	<img src="./img/utils.png" alt="utils.c" width="750px"/>
+</div>
 <br>
-<img src="https://www.ufes.br/sites/all/themes/padrao_ufes/images/marca_ufes.png" alt="logo da ufes" height="150px" width="250px">
+<br>
+As principais funções existentes no programa podem explicadas em linguagem natural como:
+
+```
+	int foo(void) - faz nada
+```
+<br>
 <br>
 
-* _Estruturas e TADs Implementados:_
+* _Estruturas e TADs Implementados:_  
+ A escolha das estruturas de cada TAD foi feita após a análise das funcionalidades pedidas, visando facilidade, clareza e versatilidade para o programa.
+
  - **Lista de Usuários:** lista individualmente encadeada contendo Tamanho, Primeiro e Último Usuário
    * _Usuário:_ TAD contendo Índice, Nome, Lista de Amigos, Lista de Playlists e Próximo Usuário
  - **Lista de Amigos:** lista individualmente encadeada contendo Tamanho, Primeiro e Último Amigo
@@ -55,7 +68,7 @@ A seguir, as principais funções existentes no programa representadas em diagra
 
 - **Conclusão:**  
 O trabalho abordou de forma clara e eficiente o uso de estruturas de dados para os mais diversos fins, explicitando a aplicação de tais estruturas desde os mais simples programas aos mais complexos sistemas.  
-As maiores dificuldades encontradas foram no uso de _void pointers_ e _heteroegeneous linked-lists_.  
+As maiores dificuldades encontradas foram no uso dos TADs de forma entrelaçada, no gerenciamento de memória e em formas eficientes de criar algoritmos.  
 
 - **Bibliografia:**  
 [listas encadeadas - IME-USP](https://www.ime.usp.br/~pf/algoritmos/aulas/lista.html)  
