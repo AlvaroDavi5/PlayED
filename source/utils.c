@@ -26,7 +26,7 @@ struct usr
 
 
 /* -------------- SO Nav and File Manip Functions -------------- */
-int createDir(char *path, char *dirName)
+int createFolder(char *path, char *dirName)
 {
 	char command[140] = "";
 

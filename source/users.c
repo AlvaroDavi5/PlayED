@@ -218,7 +218,7 @@ void refactPlayED(UsersList *users)
 
 	// storing all users musics on temporary files (to avoid large memory usage)
 	usr = users->first;
-	createDir("./", "temp");
+	createFolder("./", "temp");
 	while (usr != NULL)
 	{
 		strcpy(userPath, "./temp/");
@@ -310,6 +310,7 @@ void refactPlayED(UsersList *users)
 		musicCount = 0;
 		destroyPlaylistList(usr->playlists);
 		usr->playlists = refactPlaylists;
+		buildUserPlaylistsFolder(usr->name, usr->playlists);
 
 		usr = usr->next;
 		fclose(userpl_if);
@@ -336,6 +337,37 @@ void refactPlayED(UsersList *users)
 		usr = usr->next;
 	}
 	fclose(refact_of);
+}
+
+void buildUserPlaylistsFolder(char *userName, PlaylistList *list)
+{
+	char userPath[80] = "./output/", playlistFile[120] = "";
+
+	// prepare directory
+	createFolder(userPath, userName);
+	strcat(userPath, userName);
+	strcat(userPath, "/");
+
+	Playlist *pl = list->head;
+	while (pl != NULL)
+	{
+		strcpy(playlistFile, userPath);
+		strcat(playlistFile, pl->name);
+		FILE *pl_of = fopen(playlistFile, "w+");
+
+		Music *song = pl->head;
+		while (song != NULL)
+		{
+			fprintf(pl_of, "%s - %s", song->artist, song->name);
+			if (song->next != NULL)
+				fprintf(pl_of, "\n");
+
+			song = song->next;
+		}
+		fclose(pl_of);
+
+		pl = pl->next;
+	}
 }
 
 void printSimilarities(UsersList *users)
