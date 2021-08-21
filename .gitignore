@@ -2,6 +2,7 @@
 # ignore
 /bin
 /object
+/temp
 /output
 *.pdf
 

@@ -24,12 +24,10 @@ int main()
 	readAndCreateUserPlaylists(playlists_if, users);
 
 	createDir("./", "output");
-	displayUsersList(users);
 	refactPlayED(users);
 
 	/**
 	* TODO: URGENT!!!
-	* ! fix memory management in refactPlayED on users.c
 	* ? fix memory leak in readUserAndFriends on utils.c
 	* * create new functions to another outputs
 	**/
@@ -37,6 +35,7 @@ int main()
 
 	// freeing memory
 	destroyUsersList(users);
+	system("rm -rf ./temp"); // clear all temporary files
 
 	return 0;
 }

@@ -56,7 +56,7 @@
 		* @param string - str
 		* @return char *
 	**/
-	char* removeLeadingSpaces(char* str);
+	char * removeLeadingSpaces(char* str);
 	/**
 		* Compare two values and return a status
 		* @param int - n1

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "../include/utils.h"
 #include "../include/users.h"
 #include "../include/playlists.h"
@@ -166,7 +167,7 @@ void readPlaylistMusics(FILE *input_file, Playlist *playlist)
 	for (int i = 0; i < count; i++)
 	{
 		fscanf(input_file, "%[^-] - %[^\n]\n", artistName, musicName);
-		strcpy(artistName, removeLeadingSpaces(artistName));
+		removeLeadingSpaces(artistName);
 
 		msc = createMusic(musicName, artistName);
 		addMusicToTail(playlist, msc);
@@ -179,23 +180,24 @@ void readPlaylistMusics(FILE *input_file, Playlist *playlist)
 }
 
 /* -------------- Another Functions -------------- */
-char* removeLeadingSpaces(char* str)
+char * removeLeadingSpaces(char* str)
 {
-	static char strout[99];
-	int count = 0, j = 0, k = 0;
+	char *end;
 
-	while (str[count] == ' ') // iterate String until last leading space character
-	{
-		count++;
-	}
+	// trim leading space
+	while(isspace((unsigned char)*str)) str++;
 
-	for (j = count, k = 0; str[j] != '\0'; j++, k++)
-	{
-		strout[k] = str[j];
-	}
-	strout[k] = '\0';
+	if(*str == 0)  // all spaces?
+		return str;
 
-	return strout;
+	// trim trailing space
+	end = str + strlen(str) - 1;
+	while(end > str && isspace((unsigned char)*end))
+		end--;
+
+	end[1] = '\0'; // write new null terminator character
+
+	return str;
 }
 
 int compareValue(int n1, int n2)

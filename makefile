@@ -81,8 +81,8 @@ objectFolder:
 # clear residual files
 clean:
 	@ rm -rf ./object/*.o ./object/*.i ./object/*.s *~ ./bin/${BIN_NAME}
-	@ rm -rf ./output/
 	@ rmdir object bin
+	@ rm -rf ./output/ ./temp/
 	@ echo " \033[1;31m  Removing binary \033[41;1;37m./bin/${BIN_NAME}\033[0m\033[1;31m and compilation objects \033[41;1;37m${OBJ}\033[0m\033[1;31m and backup or output files  \033[0m "
 	@ echo ''
 
