@@ -18,7 +18,7 @@
 	typedef struct users_list UsersList;
 	/*
 		index (int)
-		name (string)
+		name (char*)
 		friends (Friendlist pointer)
 		playlists (PlaylistList pointer)
 		User pointer
@@ -36,7 +36,7 @@
 
 	// -------------- User Functions --------------
 	/**
-		* @param string - name
+		* @param char* - name
 		* @return User *
 	**/
 	User * registerUser(char *name);
@@ -95,7 +95,7 @@
 	**/
 	void refactPlayED(UsersList *users);
 	/**
-		* @param string - userName
+		* @param char* - userName
 		* @param User* - list
 		* @return void
 	**/

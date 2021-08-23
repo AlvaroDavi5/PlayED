@@ -44,8 +44,8 @@
 	void readPlaylistMusics(FILE *input_file, Playlist *playlist);
 	/**
 		* Create specific folder to save output files
-		* @param string - path
-		* @param string - dirName
+		* @param char* - path
+		* @param char* - dirName
 		* @return int
 	**/
 	int createFolder(char *path, char *dirName);
@@ -53,7 +53,7 @@
 	// -------------- System Navigation and File Manipulation Functions --------------
 	/**
 		* Remove spaces after string
-		* @param string - str
+		* @param char* - str
 		* @return char *
 	**/
 	char * removeLeadingSpaces(char* str);
