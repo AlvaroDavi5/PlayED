@@ -40,13 +40,20 @@ int createFolder(char *path, char *dirName)
 		return FALSE;
 }
 
-void readUserAndFriends(FILE *input_file, UsersList *list)
+void readUserAndFriends(char *fileAddress, UsersList *list)
 {
 	int count = 0; // user counter
 	char c = ' '; // iteration character
 	char userName[80] = "", friendName[80] = ""; // names store
 	User *usr = NULL; // user general pointer
 	Friend *fnd = NULL; // friend general pointer
+
+	FILE *input_file = fopen(fileAddress, "r");
+	if (input_file == NULL) // check if the files do not exist
+	{
+		printf("Error to open file, exiting!\n");
+		exit(1);
+	}
 
 	while (c != EOF && c != '\n') // while its not End Of File, read first line and...
 	{
@@ -80,7 +87,7 @@ void readUserAndFriends(FILE *input_file, UsersList *list)
 	fclose(input_file);
 }
 
-void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
+void readAndCreateUserPlaylists(char *fileAddress, UsersList *list)
 {
 	int playlistNum, lineCount = 0, line = 0, i = 0;
 	char c = ' ';
@@ -88,6 +95,13 @@ void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
 	User *usr = NULL;
 	Playlist *pl = NULL;
 	FILE *musics_if = NULL;
+
+	FILE *input_file = fopen(fileAddress, "r");
+	if (input_file == NULL) // check if the files do not exist
+	{
+		printf("Error to open file, exiting!\n");
+		exit(1);
+	}
 
 	rewind(input_file);
 	// counting lines

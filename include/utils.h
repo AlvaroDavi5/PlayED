@@ -23,18 +23,18 @@
 	// -------------- System Navigation and File Manipulation Functions --------------
 	/**
 		* * Read the userlist and user friendlist file to create users with friendship relation
-		* @param FILE* - input_file
+		* @param char* - fileAddress
 		* @param UsersList* - list
 		* @return void
 	**/
-	void readUserAndFriends(FILE *input_file, UsersList *list);
+	void readUserAndFriends(char *fileAddress, UsersList *list);
 	/**
 		* * Read the user playlists file and add to user profile
-		* @param FILE* - input_file
+		* @param char* - fileAddress
 		* @param UsersList* - list
 		* @return void
 	**/
-	void readAndCreateUserPlaylists(FILE *input_file, UsersList *list);
+	void readAndCreateUserPlaylists(char *fileAddress, UsersList *list);
 	/**
 		* * Read the playlist music files and add musics to playlist
 		* @param FILE* - input_file
