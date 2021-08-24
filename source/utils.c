@@ -57,32 +57,32 @@ void readUserAndFriends(char *fileAddress, UsersList *list)
 
 	while (c != EOF && c != '\n') // while its not End Of File, read first line and...
 	{
-		fscanf(input_file, "%[^;,\n]", userName); // store string between ';' as username
+		fscanf(input_file, "%[a-zA-Z]", userName); // store string between ';' as username
 		c = fgetc(input_file); // [...] continue reading
 
 		usr = registerUser(userName);
 		addUserToTail(list, usr); // creating and saving users
-
-		usr = NULL;
 		count++;
 	}
 
 	for (int i = 0; i < count; i++)
 	{
-		if (i > 0) // skip first line
-		{
-			fscanf(input_file, "%[^;];%[^\n]", userName, friendName);
-			usr = getUserByName(list, userName);
-			fnd = makeFriend(getUserByName(list, friendName));
+		if (i == 0)
+			continue;  // skip first iteration
 
-			if (usr != NULL && fnd != NULL)
+		fscanf(input_file, " %[^;];%[^\n]", userName, friendName);
+		usr = getUserByName(list, userName);
+		if (usr != NULL)
+		{
+			User *usr_fnd = getUserByName(list, friendName);
+			fnd = makeFriend(usr_fnd);
+			if (fnd != NULL)
 			{
 				addFriendToTail(usr->friends, fnd);
 				addFriendToTail(returnUser(fnd)->friends, makeFriend(usr));
 			}
 		}
 	}
-	free(fnd);
 
 	fclose(input_file);
 }
