@@ -48,6 +48,23 @@ User * returnUser(Friend *friend)
 	return friend->friend;
 }
 
+int isFriend(User *user, User *friend)
+{
+	Friend *fnd = NULL;
+
+	fnd = (user->friends)->first;
+	while (fnd != NULL)
+	{
+		if (strcmp((fnd->friend)->name, friend->name) == 0)
+		{
+			return 1; // true
+		}
+		fnd = fnd->next;
+	}
+
+	return 0; // false
+}
+
 void showFriend(Friend *friend)
 {
 	printf("%s \n", (friend->friend)->name);
@@ -79,8 +96,8 @@ void addFriendToTail(FriendList *list, Friend *fnd)
 		(list->last)->next = fnd;
 	}
 
-	fnd->index = list->size;
 	list->last = fnd;
+	fnd->index = list->size;
 	list->size += 1;
 }
 

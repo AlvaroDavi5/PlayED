@@ -42,7 +42,7 @@ valgrind: all
 
 
 # show difference between output files
-diff: run
+diff: all
 	@ echo ''
 	@ diff -r ./output/ ./output-standart/ --color=always
 

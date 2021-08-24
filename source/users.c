@@ -372,9 +372,57 @@ void buildUserPlaylistsFolder(char *userName, PlaylistList *list)
 
 void printSimilarities(UsersList *users)
 {
+	int simCounter = 0, musCounter = 0;
+	User *usr = NULL, *fnd = NULL;
+	Playlist *plUsr = NULL, *plFnd = NULL;
+	Music *mscUsr = NULL, *mscFnd = NULL;
 	FILE *similarity_of = fopen("./output/similaridades.txt", "w+");
 
-	//
+	usr = users->first;
+	while (usr != NULL) // scroll through the entire userlist
+	{
+		fnd = usr->next;
+		while (fnd != NULL)
+		{
+			if (isFriend(usr, fnd)) // and verify friendship
+			{
+				plUsr = (usr->playlists)->head;
+				musCounter = 0;
+				while (plUsr != NULL) // scroll through all user playlists
+				{
+					plFnd = (fnd->playlists)->head;
+					while (plFnd != NULL)  // scroll through all friend playlists
+					{
+						if (strcmp(plUsr->name, plFnd->name) == 0) // ! just verify if playlists are refactored and have the same name (artist name)
+						{
+							mscUsr = plUsr->head;
+							while (mscUsr != NULL)
+							{
+								mscFnd = plFnd->head;
+								while (mscFnd != NULL)
+								{
+									if (strcmp(mscUsr->name, mscFnd->name) == 0)
+										musCounter++;
+									mscFnd = mscFnd->next;
+								}
+								mscUsr = mscUsr->next;
+							}
+							simCounter = musCounter;
+						}
+						plFnd = plFnd->next;
+					}
+					plUsr = plUsr->next;
+				}
+
+				if ((usr->next)->next == NULL && fnd->next == NULL)
+					fprintf(similarity_of, "%s;%s;%d", usr->name, fnd->name, simCounter);
+				else
+					fprintf(similarity_of, "%s;%s;%d\n", usr->name, fnd->name, simCounter);
+			}
+			fnd = fnd->next;
+		}
+		usr = usr->next;
+	}
 
 	fclose(similarity_of);
 }

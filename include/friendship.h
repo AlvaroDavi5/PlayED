@@ -46,6 +46,12 @@
 	**/
 	User * returnUser(Friend *friend);
 	/**
+		* @param User* - user
+		* @param User* - friend
+		* @return int
+	**/
+	int isFriend(User *user, User *friend);
+	/**
 		* @param Friend* - friend
 		* @return void
 	**/
