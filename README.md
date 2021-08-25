@@ -49,16 +49,16 @@ A seguir, alguns exemplos da declaração das funções e sua documentação den
 <br>
 As principais funções existentes no programa podem explicadas em linguagem natural como:
 
-```c++
-	UsersList * initUsersList() // inicia lista de usuarios vazia
-	User * registerUser(char *name) // cria um novo usuário com o nome fornecido
+```c
+	UsersList * initUsersList(); // inicia lista de usuarios vazia
+	User * registerUser(char *name); // cria um novo usuário com o nome fornecido
 
-	FriendList * initFriendList() // inicia uma lista de amigos vazia
-	Friend * makeFriend(User *usr) // cria um novo elemento para a lista de amigos que aponta para um usuário em específico
+	FriendList * initFriendList(); // inicia uma lista de amigos vazia
+	Friend * makeFriend(User *usr); // cria um novo elemento para a lista de amigos que aponta para um usuário em específico
 
-	PlaylistList * initPlaylistList() // inicia uma lista de playlists vazia
-	Playlist * initPlaylist(char *name) // inicia uma playlist vazia que é um elemento de uma lista e uma lista ao mesmo tempo
-	Music * createMusic(char *name, char *artist) // cria uma música com nome e artista fornecidos
+	PlaylistList * initPlaylistList(); // inicia uma lista de playlists vazia
+	Playlist * initPlaylist(char *name); // inicia uma playlist vazia que é um elemento de uma lista e uma lista ao mesmo tempo
+	Music * createMusic(char *name, char *artist); // cria uma música com nome e artista fornecidos
 ```
 <br>
 <br>
