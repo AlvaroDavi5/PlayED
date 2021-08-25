@@ -18,7 +18,7 @@
 	typedef struct users_list UsersList;
 	/*
 		index (int)
-		name (string)
+		name (char*)
 		friends (Friendlist pointer)
 		playlists (PlaylistList pointer)
 		User pointer
@@ -36,7 +36,7 @@
 
 	// -------------- User Functions --------------
 	/**
-		* @param string - name
+		* @param char* - name
 		* @return User *
 	**/
 	User * registerUser(char *name);
@@ -88,27 +88,22 @@
 	**/
 	void displayUsersList(UsersList *list);
 
-	// -------------- Another Functions --------------
+	// -------------- General Functions --------------
 	/**
-		* Read the userlist and user friendlist file to create users with friendship relation
-		* @param FILE* - input_file
-		* @param UsersList* - list
+		* @param UsersList* - users
 		* @return void
 	**/
-	void readUserAndFriends(FILE *input_file, UsersList *list);
+	void refactPlayED(UsersList *users);
 	/**
-		* Read the user playlists file and add to user profile
-		* @param FILE* - input_file
-		* @param UsersList* - list
+		* @param char* - userName
+		* @param User* - list
 		* @return void
 	**/
-	void readAndCreateUserPlaylists(FILE *input_file, UsersList *list);
+	void buildUserPlaylistsFolder(char *userName, PlaylistList *list);
 	/**
-		* Compare two values and return a status
-		* @param int - n1
-		* @param int - n2
-		* @return 0: n2 == n1, 1: n2 > n1, -1: n2 < n1
+		* @param UsersList* - users
+		* @return void
 	**/
-	int compareValue(int n1, int n2);
+	void printSimilarities(UsersList *users);
 
 #endif

@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../include/utils.h"
 #include "../include/users.h"
+#include "../include/playlists.h"
 
 
 struct users_list
@@ -18,6 +20,32 @@ struct usr
 	FriendList *friends;
 	PlaylistList *playlists;
 	User *next;
+};
+
+struct playlists_list
+{
+	int size;
+	Playlist *head;
+	Playlist *tail;
+};
+
+struct playlist
+{
+	int index;
+	char *name;
+	Playlist *prev;
+	Playlist *next;
+	int size;
+	Music *head;
+	Music *tail;
+};
+
+struct music
+{
+	int index;
+	char *artist;
+	char *name;
+	Music *next;
 };
 
 
@@ -179,123 +207,222 @@ void displayUsersList(UsersList *list)
 }
 
 
-/* -------------- Another Functions -------------- */
-void readUserAndFriends(FILE *input_file, UsersList *list)
+/* -------------- General Manipulation -------------- */
+void refactPlayED(UsersList *users)
 {
-	int count = 0; // user counter
-	char c = ' '; // iteration character
-	char userName[80] = "", friendName[80] = ""; // names store
-	User *usr = NULL; // user general pointer
-	Friend *fnd = NULL; // friend general pointer
-
-	while (c != EOF && c != '\n') // while its not End Of File, read first line and...
-	{
-		fscanf(input_file, "%[^;,\n]", userName); // store string between ';' as username
-		c = fgetc(input_file); // [...] continue reading
-
-		usr = registerUser(userName);
-		addUserToTail(list, usr); // creating and saving users
-
-		usr = NULL;
-		count++;
-	}
-
-	for (int i = 0; i < count; i++)
-	{
-		if (i > 0) // skip first line
-		{
-			fscanf(input_file, "%[^;];%[^\n]", userName, friendName);
-			usr = getUserByName(list, userName);
-			fnd = makeFriend(getUserByName(list, friendName));
-
-			if (usr != NULL && fnd != NULL)
-			{
-				addFriendToTail(usr->friends, fnd);
-				addFriendToTail(returnUser(fnd)->friends, makeFriend(usr));
-			}
-		}
-	}
-	free(fnd);
-
-	fclose(input_file);
-}
-
-void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
-{
-	int playlistNum, lineCount = 0, line = 0, i = 0;
-	char c = ' ';
-	char userName[80] = "", playlistName[80] = "", filePath[120] = "";
 	User *usr = NULL;
+	PlaylistList *refactPlaylists = NULL;
 	Playlist *pl = NULL;
-	FILE *musics_if = NULL;
+	int musicCount = 0;
+	char userPath[80] = "", playlistName[70] = "", artistName[60] = "", musicName[80] = "";
 
-	rewind(input_file);
-	// counting lines
-	while (c != EOF)
+	// storing all users musics on temporary files (to avoid large memory usage)
+	usr = users->first;
+	createFolder("./", "temp");
+	while (usr != NULL)
 	{
-		c = fgetc(input_file);
-		if (c == '\n')
-			line++;
-	}
-	lineCount =  line+1;
-	rewind(input_file); // reseting file pointer (to read again)
+		strcpy(userPath, "./temp/");
+		strcat(userPath, usr->name);
+		strcat(userPath, ".txt");
+		FILE *userpl_of = fopen(userPath, "w+");
 
-	for (int l = 0; l < lineCount; l++)
-	{
-		fscanf(input_file, "%[^;];%d", userName, &playlistNum); // reading user and number of playlist
-
-		usr = list->first;
-		while (usr != NULL) // runs through all users
+		pl = (usr->playlists)->head;
+		while (pl != NULL)
 		{
-			if ((strcmp(userName, usr->name)) == 0)
+			Music *msc = pl->head;
+			while (msc != NULL)
 			{
-				for (i = 0; i < playlistNum; i++)
+				fprintf(userpl_of, "%s~%s\n", msc->artist, msc->name);
+				msc = msc->next;
+			}
+			pl = pl->next;
+		}
+		usr = usr->next;
+		fclose(userpl_of);
+	}
+
+	// refactoring playlists
+	usr = users->first;
+	while (usr != NULL)
+	{
+		strcpy(userPath, "./temp/");
+		strcat(userPath, usr->name);
+		strcat(userPath, ".txt");
+		FILE *userpl_if = fopen(userPath, "r");
+		char c = ' ';
+		refactPlaylists = initPlaylistList();
+
+		rewind(userpl_if);
+		while (c != EOF)
+		{
+			c = fgetc(userpl_if);
+			if (c == '\n')
+				musicCount++;
+		}
+		rewind(userpl_if);
+		for (int l = 0; l < musicCount; l++)
+		{
+			fscanf(userpl_if, "%[^~]~%[^\n]\n", artistName, musicName);
+
+			Music *msc = createMusic(musicName, artistName); // create music
+			Playlist *rpl = refactPlaylists->head; // iterate for all new playlists
+			Playlist *npl = NULL;
+			int playlistWasCreated = 2;
+
+			strcpy(artistName, msc->artist); // save artist name
+			strcat(artistName, ".txt");
+			strcpy(playlistName, artistName); // create playlist name
+
+			if (rpl == NULL && refactPlaylists->size == 0)
+			{
+				npl = initPlaylist(playlistName);
+				addMusicToTail(npl, msc);
+				addPlaylistToTail(refactPlaylists, npl);
+			}
+			else
+			{
+				while (rpl != NULL)
 				{
-					// reading playlist name
-					if (i != playlistNum-1)
-						fscanf(input_file, ";%[^;]", playlistName);
-					else
-						fscanf(input_file, ";%[^\n]", playlistName);
-
-					pl = initPlaylist(playlistName);
-					addPlaylistToTail(usr->playlists, pl);
-
-					strcpy(filePath, "./input/");
-					strcat(filePath, playlistName);
-					musics_if = fopen(filePath, "r");
-					if (musics_if == NULL)
+					if (strcmp(playlistName, rpl->name) == 0) // if the playlist with the artist name already exists...
 					{
-						printf("Error to open '%s' file, exiting! \n", filePath);
-						exit(1);
+						playlistWasCreated = TRUE;
+						break;
+					}
+					else
+						playlistWasCreated = FALSE;
+					rpl = rpl->next;
+				}
+				{
+					if (playlistWasCreated == FALSE) // if the playlist was not created...
+					{
+						npl = initPlaylist(playlistName); // [...] create new playlist
+						addMusicToTail(npl, msc); // add music
+						addPlaylistToTail(refactPlaylists, npl); // save playlist
 					}
 					else
 					{
-						readPlaylistMusics(musics_if, pl); // load musics
+						addMusicToTail(rpl, msc); // just add music to existent playlist
 					}
-					strcpy(filePath, "./input/");
 				}
 			}
-			fscanf(input_file, "\n");
-
-			usr = usr->next;
+			rpl = refactPlaylists->head;
 		}
+		musicCount = 0;
+		destroyPlaylistList(usr->playlists);
+		usr->playlists = refactPlaylists;
+		buildUserPlaylistsFolder(usr->name, usr->playlists);
+
+		usr = usr->next;
+		fclose(userpl_if);
 	}
 
-	fclose(input_file);
+	// writing refactored playED
+	FILE *refact_of = fopen("./output/played-refatorada.txt", "w+");
+
+	usr = users->first;
+	while (usr != NULL)
+	{
+		fprintf(refact_of, "%s;%d;", usr->name, (usr->playlists)->size);
+		pl = (usr->playlists)->head;
+		while (pl != NULL)
+		{
+			if (pl->next != NULL)
+				fprintf(refact_of, "%s;", pl->name);
+			else if (usr->next != NULL)
+				fprintf(refact_of, "%s\n", pl->name);
+			else
+				fprintf(refact_of, "%s", pl->name);
+			pl = pl->next;
+		}
+		usr = usr->next;
+	}
+	fclose(refact_of);
 }
 
-int compareValue(int n1, int n2)
+void buildUserPlaylistsFolder(char *userName, PlaylistList *list)
 {
-	if (n1 == n2)
+	char userPath[80] = "./output/", playlistFile[120] = "";
+
+	// prepare directory
+	createFolder(userPath, userName);
+	strcat(userPath, userName);
+	strcat(userPath, "/");
+
+	Playlist *pl = list->head;
+	while (pl != NULL)
 	{
-		return 0;
+		strcpy(playlistFile, userPath);
+		strcat(playlistFile, pl->name);
+		FILE *pl_of = fopen(playlistFile, "w+");
+
+		Music *song = pl->head;
+		while (song != NULL)
+		{
+			fprintf(pl_of, "%s - %s", song->artist, song->name);
+			if (song->next != NULL)
+				fprintf(pl_of, "\n");
+
+			song = song->next;
+		}
+		fclose(pl_of);
+
+		pl = pl->next;
 	}
-	else if (n2 > n1)
+}
+
+void printSimilarities(UsersList *users)
+{
+	int simCounter = 0, musCounter = 0;
+	User *usr = NULL, *fnd = NULL;
+	Playlist *plUsr = NULL, *plFnd = NULL;
+	Music *mscUsr = NULL, *mscFnd = NULL;
+	FILE *similarity_of = fopen("./output/similaridades.txt", "w+");
+
+	usr = users->first;
+	while (usr != NULL) // scroll through the entire userlist
 	{
-		return 1;
+		fnd = usr->next;
+		while (fnd != NULL)
+		{
+			if (isFriend(usr, fnd)) // and verify friendship
+			{
+				plUsr = (usr->playlists)->head;
+				musCounter = 0;
+				while (plUsr != NULL) // scroll through all user playlists
+				{
+					plFnd = (fnd->playlists)->head;
+					while (plFnd != NULL)  // scroll through all friend playlists
+					{
+						if (strcmp(plUsr->name, plFnd->name) == 0) // ! just verify if playlists are refactored and have the same name (artist name)
+						{
+							mscUsr = plUsr->head;
+							while (mscUsr != NULL)
+							{
+								mscFnd = plFnd->head;
+								while (mscFnd != NULL)
+								{
+									if (strcmp(mscUsr->name, mscFnd->name) == 0)
+										musCounter++;
+									mscFnd = mscFnd->next;
+								}
+								mscUsr = mscUsr->next;
+							}
+							simCounter = musCounter;
+						}
+						plFnd = plFnd->next;
+					}
+					plUsr = plUsr->next;
+				}
+
+				if ((usr->next)->next == NULL && fnd->next == NULL)
+					fprintf(similarity_of, "%s;%s;%d", usr->name, fnd->name, simCounter);
+				else
+					fprintf(similarity_of, "%s;%s;%d\n", usr->name, fnd->name, simCounter);
+			}
+			fnd = fnd->next;
+		}
+		usr = usr->next;
 	}
-	else
-	{
-		return -1;
-	}
+
+	fclose(similarity_of);
 }

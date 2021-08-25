@@ -15,7 +15,7 @@
 	typedef struct playlists_list PlaylistList;
 	/*
 		index (int)
-		name (string)
+		name (char*)
 		Playlist pointers
 		- prev
 		- next
@@ -28,8 +28,8 @@
 	typedef struct playlist Playlist;
 	/*
 		index (int)
-		artist (string)
-		name (string)
+		artist (char*)
+		name (char*)
 		Music pointer
 		- next
 	*/
@@ -45,8 +45,8 @@
 
 	// -------------- Music Manipulation --------------
 	/**
-		* @param string - name
-		* @param string - artist
+		* @param char* - name
+		* @param char* - artist
 		* @return Music *
 	**/
 	Music * createMusic(char *name, char *artist);
@@ -58,7 +58,7 @@
 
 	// -------------- Playlist Manipulation --------------
 	/**
-		* @param string - name
+		* @param char* - name
 		* @return Playlist *
 	**/
 	Playlist * initPlaylist(char *name);
@@ -127,14 +127,5 @@
 		* @return void
 	**/
 	void displayPlaylistList(PlaylistList *list);
-
-	// -------------- Another Functions --------------
-	/**
-		* Read the playlist music files and add musics to playlist
-		* @param FILE* - input_file
-		* @param Playlist* - playlist
-		* @return void
-	**/
-	void readPlaylistMusics(FILE *input_file, Playlist *playlist);
 
 #endif
