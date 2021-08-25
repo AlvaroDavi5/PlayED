@@ -1,0 +1,11 @@
+
+# ignore
+/bin
+/object
+/temp
+/output
+*.pdf
+
+
+# except
+!especificacoes-Trabalho1.pdf
