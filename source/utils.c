@@ -40,7 +40,7 @@ int createFolder(char *path, char *dirName)
 		return FALSE;
 }
 
-void readUserAndFriends(FILE *input_file, UsersList *list)
+void readUserAndFriends(char *fileAddress, UsersList *list)
 {
 	int count = 0; // user counter
 	char c = ' '; // iteration character
@@ -48,39 +48,46 @@ void readUserAndFriends(FILE *input_file, UsersList *list)
 	User *usr = NULL; // user general pointer
 	Friend *fnd = NULL; // friend general pointer
 
+	FILE *input_file = fopen(fileAddress, "r");
+	if (input_file == NULL) // check if the files do not exist
+	{
+		printf("Error to open file, exiting!\n");
+		exit(1);
+	}
+
 	while (c != EOF && c != '\n') // while its not End Of File, read first line and...
 	{
-		fscanf(input_file, "%[^;,\n]", userName); // store string between ';' as username
+		fscanf(input_file, "%[a-zA-Z]", userName); // store string between ';' as username
 		c = fgetc(input_file); // [...] continue reading
 
 		usr = registerUser(userName);
 		addUserToTail(list, usr); // creating and saving users
-
-		usr = NULL;
 		count++;
 	}
 
 	for (int i = 0; i < count; i++)
 	{
-		if (i > 0) // skip first line
-		{
-			fscanf(input_file, "%[^;];%[^\n]", userName, friendName);
-			usr = getUserByName(list, userName);
-			fnd = makeFriend(getUserByName(list, friendName));
+		if (i == 0)
+			continue;  // skip first iteration
 
-			if (usr != NULL && fnd != NULL)
+		fscanf(input_file, " %[^;];%[^\n]", userName, friendName);
+		usr = getUserByName(list, userName);
+		if (usr != NULL)
+		{
+			User *usr_fnd = getUserByName(list, friendName);
+			fnd = makeFriend(usr_fnd);
+			if (fnd != NULL)
 			{
 				addFriendToTail(usr->friends, fnd);
 				addFriendToTail(returnUser(fnd)->friends, makeFriend(usr));
 			}
 		}
 	}
-	free(fnd);
 
 	fclose(input_file);
 }
 
-void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
+void readAndCreateUserPlaylists(char *fileAddress, UsersList *list)
 {
 	int playlistNum, lineCount = 0, line = 0, i = 0;
 	char c = ' ';
@@ -88,6 +95,13 @@ void readAndCreateUserPlaylists(FILE *input_file, UsersList *list)
 	User *usr = NULL;
 	Playlist *pl = NULL;
 	FILE *musics_if = NULL;
+
+	FILE *input_file = fopen(fileAddress, "r");
+	if (input_file == NULL) // check if the files do not exist
+	{
+		printf("Error to open file, exiting!\n");
+		exit(1);
+	}
 
 	rewind(input_file);
 	// counting lines
