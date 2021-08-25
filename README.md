@@ -29,28 +29,36 @@ ____
 - [x] Documentar funções, estruturas, constantes e macros nos arquivos header em `include` (comentários multilinha)  
 - [x] Documentar trechos complicados do código nos arquivos source em `source` (comentários em uma linha)  
 - [x] Criar makefile para compilar os arquivos
-- [ ] Criar arquivo PDF com documentação separada em:  
+- [x] Criar arquivo PDF com documentação separada em:  
 - **Introdução:**  
 Criação de um programa para gerenciar músicas em playlists e relação de usuários no estilo rede social escrito na linguagem procedural estruturada C utilizando tipos abstratos de dados, modularização, leitura de arquivos, estruturas de dados e gerenciamento de memória.  
 - **Implementação:**  
 O programa é dividido nos arquivos ```friendship```, ```playlists```, ```users``` e ```utils```, onde a implementação das funções e dos tipos abstratos se encontram em arquivos de extensão _.c_ no diretório <span style="color:#f02c00">_source_</span> e suas definições e protótipos se encontram em arquivos de extensão _.h_ no diretório <span style="color:#426cf5">_include_</span>.  
 
 Abaixo, o diagrama representativo de cada tipo implementado:
-![TADs e ED](./img/diagram.png)
+![TADs e ED](https://raw.githubusercontent.com/AlvaroDavi5/PlayED-Data_Structures/dev/img/diagram.png)
 <br>
 <br>
 A seguir, alguns exemplos da declaração das funções e sua documentação dentro do código, de forma que fiquem compreensíveis e bem documentadas mesmo utilizando ferramentas de IntelliSense existentes na maioria dos editores de código e IDEs.  
 <div align="center">
-	<img src="./img/main.png" alt="main.c" height="420px"/>
+	<img src="https://raw.githubusercontent.com/AlvaroDavi5/PlayED-Data_Structures/dev/img/main.png" alt="main.c" height="420px"/>
 	<br>e
-	<img src="./img/utils.png" alt="utils.c" width="750px"/>
+	<img src="https://raw.githubusercontent.com/AlvaroDavi5/PlayED-Data_Structures/dev/img/utils.png" alt="utils.c" width="750px"/>
 </div>
 <br>
 <br>
 As principais funções existentes no programa podem explicadas em linguagem natural como:
 
 ```
-	int foo(void) - faz nada
+	UsersList * initUsersList() - inicia lista de usuarios vazia
+	User * registerUser(char *name) - cria um novo usuário com o nome fornecido
+
+	FriendList * initFriendList() - inicia uma lista de amigos vazia
+	Friend * makeFriend(User *usr) - cria um novo elemento para a lista de amigos que aponta para um usuário em específico
+
+	PlaylistList * initPlaylistList() - inicia uma lista de playlists vazia
+	Playlist * initPlaylist(char *name) - inicia uma playlist vazia que é um elemento de uma lista e uma lista ao mesmo tempo
+	Music * createMusic(char *name, char *artist) - cria uma música com nome e artista fornecidos
 ```
 <br>
 <br>
