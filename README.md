@@ -47,7 +47,7 @@ A seguir, alguns exemplos da declaração das funções e sua documentação den
 </div>
 <br>
 <br>
-As principais funções existentes no programa podem explicadas em linguagem natural como:
+As principais funções existentes no programa podem ser explicadas em linguagem natural como:
 
 ```c
 	UsersList * initUsersList(); // inicia lista de usuarios vazia
